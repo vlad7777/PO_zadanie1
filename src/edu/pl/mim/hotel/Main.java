@@ -2,10 +2,10 @@ package edu.pl.mim.hotel;
 
 import edu.pl.mim.hotel.Guest.*;
 import edu.pl.mim.hotel.Receptionist.*;
-import edu.pl.mim.hotel.Requirement.ColourPalette;
-import edu.pl.mim.hotel.Requirement.Direction;
-import edu.pl.mim.hotel.Requirement.Requirements;
-import edu.pl.mim.hotel.Requirement.Style;
+import edu.pl.mim.hotel.Requirement.Kolorystyka;
+import edu.pl.mim.hotel.Requirement.Kierunek;
+import edu.pl.mim.hotel.Requirement.Ankieta;
+import edu.pl.mim.hotel.Requirement.Styl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,64 +14,64 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        Date checkIn = new Date(2016, 03, 01);
-        Date checkOut = new Date(2016, 03, 05);
+        Date dataPrzyjazdu = new Date(2016, 03, 01);
+        Date dataWyjazdu = new Date(2016, 03, 05);
 
-        Date checkInM = new Date(2016, 03, 9);
-        Date checkOutM = new Date(2016, 03, 15);
+        Date dataPrzyjazduM = new Date(2016, 03, 9);
+        Date dataWyjazduM = new Date(2016, 03, 15);
 
-        List<Room> roomsList = new ArrayList<>();
+        List<Pokoj> roomsList = new ArrayList<>();
 
-        roomsList.add(new Room(1, 30, 1, Style.Modern, ColourPalette.Celadon, Direction.North, true));
-        roomsList.add(new Room(2 ,60, 1, Style.Modern, ColourPalette.Celadon, Direction.North, true));
-        roomsList.add(new Room(3 ,900, 1, Style.Modern, ColourPalette.Celadon, Direction.North, true));
-        roomsList.add(new Room(4 ,30, 3, Style.Navy, ColourPalette.Grey, Direction.South, false));
-        roomsList.add(new Room(5 ,310, 2, Style.Secessionist, ColourPalette.Purple, Direction.East, true));
-        roomsList.add(new Room(6 ,210, 5, Style.Rustic, ColourPalette.Steel, Direction.West, false));
-        roomsList.add(new Room(7, 1, 1300, Style.Rustic, ColourPalette.Steel, Direction.West, true));
-        roomsList.add(new Room(8, 100500, 1, Style.Modern, ColourPalette.LightGreen, Direction.East, true));
-        roomsList.add(new Room(9, 500, 9, Style.Modern, ColourPalette.Navy, Direction.East, false));
-        roomsList.add(new Room(10, 50, 2, Style.Modern, ColourPalette.Navy, Direction.East, true));
+        roomsList.add(new Pokoj(1, 30, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
+        roomsList.add(new Pokoj(2 ,60, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
+        roomsList.add(new Pokoj(3 ,900, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
+        roomsList.add(new Pokoj(4 ,30, 3, Styl.Morksi, Kolorystyka.Szary, Kierunek.Poludnie, false));
+        roomsList.add(new Pokoj(5 ,310, 2, Styl.Secesyjny, Kolorystyka.Purpurowy, Kierunek.Wchod, true));
+        roomsList.add(new Pokoj(6 ,210, 5, Styl.Rustykalny, Kolorystyka.Stalowy, Kierunek.Zachod, false));
+        roomsList.add(new Pokoj(7, 1, 1300, Styl.Rustykalny, Kolorystyka.Stalowy, Kierunek.Zachod, true));
+        roomsList.add(new Pokoj(8, 100500, 1, Styl.Nowoczesny, Kolorystyka.Jasnozielony, Kierunek.Wchod, true));
+        roomsList.add(new Pokoj(9, 500, 9, Styl.Nowoczesny, Kolorystyka.Morski, Kierunek.Wchod, false));
+        roomsList.add(new Pokoj(10, 50, 2, Styl.Nowoczesny, Kolorystyka.Morski, Kierunek.Wchod, true));
 
-        for (Room r : roomsList)
+        for (Pokoj r : roomsList)
             try {
-                r.book(checkInM, checkOutM);
+                r.rezerwuj(dataPrzyjazduM, dataWyjazduM);
             } catch (Exception e) {
-                System.out.println("Room booking error");
+                System.out.println("Pokoj booking error");
             }
 
-        List<Requirements> requirements = new ArrayList<>();
-        requirements.add(new Requirements(210, 5, Style.Rustic, ColourPalette.Steel, Direction.West, false, checkIn, 4));
-        requirements.add(new Requirements(10, 3, Style.Modern, ColourPalette.LightGreen, Direction.East, false, checkIn, 4));
-        requirements.add(new Requirements(1000400, 1, Style.Modern, ColourPalette.LightGreen, Direction.East, true, checkIn, 4));
-        requirements.add(new Requirements(100, 5, Style.Rustic, ColourPalette.Steel, Direction.East, true, checkIn, 4));
-        requirements.add(new Requirements(100, 1, Style.Modern, ColourPalette.Celadon, Direction.North, false, checkInM, 6));
+        List<Ankieta> ankiety = new ArrayList<>();
+        ankiety.add(new Ankieta(210, 5, Styl.Rustykalny, Kolorystyka.Stalowy, Kierunek.Zachod, false, dataPrzyjazdu, 4));
+        ankiety.add(new Ankieta(10, 3, Styl.Nowoczesny, Kolorystyka.Jasnozielony, Kierunek.Wchod, false, dataPrzyjazdu, 4));
+        ankiety.add(new Ankieta(1000400, 1, Styl.Nowoczesny, Kolorystyka.Jasnozielony, Kierunek.Wchod, true, dataPrzyjazdu, 4));
+        ankiety.add(new Ankieta(100, 5, Styl.Rustykalny, Kolorystyka.Stalowy, Kierunek.Wchod, true, dataPrzyjazdu, 4));
+        ankiety.add(new Ankieta(100, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, false, dataPrzyjazduM, 6));
 
-        List<Guest> guests = new ArrayList<>();
-        guests.add(new ApproximatingGuest("Wilkins Micawber"));
-        guests.add(new IndifferentGuest("Jane Murdstone"));
-        guests.add(new PerfectGuest("Little Em'ly"));
-        guests.add(new ViewLoverGuest("Mr. Sharp"));
-        guests.add(new LowBudgetGuest("Mr. Barkis"));
+        List<Klient> klienci = new ArrayList<>();
+        klienci.add(new AproksymacyjnyKlient("Wilkins Micawber"));
+        klienci.add(new UgodowyKlient("Jane Murdstone"));
+        klienci.add(new PerfecyjnyKlient("Little Em'ly"));
+        klienci.add(new WidokowyKlient("Mr. Sharp"));
+        klienci.add(new BudzetowyKlient("Mr. Barkis"));
 
-        List<Receptionist> receptionists = new ArrayList<>();
-        receptionists.add(new ApproximatingReceptionist("Ham Peggoty"));
-        receptionists.add(new RandomReceptionist("Clara Paggoty"));
-        receptionists.add(new EvilReceptionist("Uriah Heep"));
-        receptionists.add(new PerfectReceptionist("David Copperfield"));
+        List<Recepcjonista> recepcjonisci = new ArrayList<>();
+        recepcjonisci.add(new AproksymacyjnyRecepcjonista("Ham Peggoty"));
+        recepcjonisci.add(new LosowyRecepcjonista("Clara Paggoty"));
+        recepcjonisci.add(new ZlosliwyRecepcjonista("Uriah Heep"));
+        recepcjonisci.add(new PerfekcyjnyRecepcjonista("David Copperfield"));
 
-        List<Order> orders = new ArrayList<>();
-        for (int i = 0; i < guests.size(); i++) {
-            orders.add(Hotel.placeOrder(guests.get(i), requirements.get(i)));
+        List<Zamowienie> zamowienia = new ArrayList<>();
+        for (int i = 0; i < klienci.size(); i++) {
+            zamowienia.add(Hotel.przyjmijZamowienie(klienci.get(i), ankiety.get(i)));
         }
 
-        Room[] roomsArray = roomsList.toArray(new Room[roomsList.size()]);
-        Receptionist[] receptionistsArray = receptionists.toArray(new Receptionist[receptionists.size()]);
-        Order[] ordersArray = orders.toArray(new Order[orders.size()]);
+        Pokoj[] pokojeArray = roomsList.toArray(new Pokoj[roomsList.size()]);
+        Recepcjonista[] recepcjonisciArray = recepcjonisci.toArray(new Recepcjonista[recepcjonisci.size()]);
+        Zamowienie[] zamowieniaArray = zamowienia.toArray(new Zamowienie[zamowienia.size()]);
 
-        Hotel greenGables = new Hotel(roomsArray, receptionistsArray);
+        Hotel greenGables = new Hotel(pokojeArray, recepcjonisciArray);
         try {
-            greenGables.processOrders(ordersArray, roomsArray, receptionistsArray);
+            greenGables.akceptuj(zamowieniaArray, pokojeArray, recepcjonisciArray);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

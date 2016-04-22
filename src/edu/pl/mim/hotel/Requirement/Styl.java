@@ -4,12 +4,12 @@ package edu.pl.mim.hotel.Requirement;
  * Created by vlad on 15.04.16.
  */
 
-public enum Style {
-    Oriental("Oriental"), Navy("Navy"), Modern("Modern"), Rustic("Rustic"), Secessionist("Secessionist");
+public enum Styl {
+    Orientalny("Orientalny"), Morksi("Morski"), Nowoczesny("Nowoczesny"), Rustykalny("Rustykalny"), Secesyjny("Secesyjny");
 
     private final String value;
 
-    Style(String value) {
+    Styl(String value) {
         this.value = value;
     }
 
