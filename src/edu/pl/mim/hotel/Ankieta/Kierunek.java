@@ -1,4 +1,4 @@
-package edu.pl.mim.hotel.Requirement;
+package edu.pl.mim.hotel.Ankieta;
 
 /**
  * Created by vlad on 15.04.16.

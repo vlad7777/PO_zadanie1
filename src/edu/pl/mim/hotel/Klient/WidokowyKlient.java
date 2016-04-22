@@ -1,6 +1,6 @@
-package edu.pl.mim.hotel.Guest;
+package edu.pl.mim.hotel.Klient;
 
-import edu.pl.mim.hotel.Requirement.Ankieta;
+import edu.pl.mim.hotel.Ankieta.Ankieta;
 import edu.pl.mim.hotel.Pokoj;
 
 /**

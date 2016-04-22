@@ -1,7 +1,7 @@
-package edu.pl.mim.hotel.Receptionist;
+package edu.pl.mim.hotel.Recepcjonista;
 
 import edu.pl.mim.hotel.Pokoj;
-import edu.pl.mim.hotel.Requirement.Ankieta;
+import edu.pl.mim.hotel.Ankieta.Ankieta;
 
 /**
  * Created by vlad on 15.04.16.

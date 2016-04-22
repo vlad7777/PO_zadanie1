@@ -1,18 +1,20 @@
 package edu.pl.mim.hotelTest;
 
+import edu.pl.mim.hotel.Ankieta.Ankieta;
+import edu.pl.mim.hotel.Ankieta.Kierunek;
+import edu.pl.mim.hotel.Ankieta.Kolorystyka;
+import edu.pl.mim.hotel.Ankieta.Styl;
 import edu.pl.mim.hotel.Pokoj;
-import edu.pl.mim.hotel.Receptionist.*;
-import edu.pl.mim.hotel.Receptionist.ZlosliwyRecepcjonista;
-import edu.pl.mim.hotel.Receptionist.PerfekcyjnyRecepcjonista;
-import edu.pl.mim.hotel.Requirement.Kolorystyka;
-import edu.pl.mim.hotel.Requirement.Kierunek;
-import edu.pl.mim.hotel.Requirement.Ankieta;
-import edu.pl.mim.hotel.Requirement.Styl;
+import edu.pl.mim.hotel.Recepcjonista.AproksymacyjnyRecepcjonista;
+import edu.pl.mim.hotel.Recepcjonista.LosowyRecepcjonista;
+import edu.pl.mim.hotel.Recepcjonista.PerfekcyjnyRecepcjonista;
+import edu.pl.mim.hotel.Recepcjonista.ZlosliwyRecepcjonista;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -28,11 +30,9 @@ public class RecepcjonistaTest {
 
     @Before
     public void setUp() throws Exception {
-        Date dataPrzyjazdu = new Date(2016, 03, 01);
-        Date dataWyjazdu = new Date(2016, 03, 05);
 
-        Date dataPrzyjazduM = new Date(2016, 03, 9);
-        Date dataWyjazduM = new Date(2016, 03, 15);
+        Date dataPrzyjazdu = new GregorianCalendar(2016, 3, 1).getTime();
+        Date dataPrzyjazduM = new GregorianCalendar(2016, 3, 9).getTime();
 
         List<Pokoj> listaPokojow = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class RecepcjonistaTest {
         listaPokojow.add(new Pokoj(9, 500, 9, Styl.Nowoczesny, Kolorystyka.Morski, Kierunek.Wchod, false));
         listaPokojow.add(new Pokoj(10, 50, 2, Styl.Nowoczesny, Kolorystyka.Morski, Kierunek.Wchod, true));
         for (Pokoj r : listaPokojow)
-            r.rezerwuj(dataPrzyjazduM, dataWyjazduM);
+            r.rezerwuj(dataPrzyjazduM, 6);
 
         this.pokoje = listaPokojow.toArray(new Pokoj[listaPokojow.size()]);
 

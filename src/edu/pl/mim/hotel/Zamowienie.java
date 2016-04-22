@@ -1,7 +1,7 @@
 package edu.pl.mim.hotel;
 
-import edu.pl.mim.hotel.Guest.Klient;
-import edu.pl.mim.hotel.Requirement.Ankieta;
+import edu.pl.mim.hotel.Klient.Klient;
+import edu.pl.mim.hotel.Ankieta.Ankieta;
 
 /**
  * Created by vlad on 15.04.16.
@@ -17,7 +17,7 @@ public class Zamowienie {
         this.ankieta = ankieta;
     }
 
-    public void zakoncz(Pokoj pokoj) throws Pokoj.RoomAlreadyBookedException {
+    public void zakoncz(Pokoj pokoj) throws Pokoj.PokojJuzZajety {
         pokoj.rezerwuj(ankieta.dataPrzyjazdu(), ankieta.dataWyjazdu());
     }
 

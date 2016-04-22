@@ -1,9 +1,9 @@
 package edu.pl.mim.hotel;
 
-import edu.pl.mim.hotel.Requirement.Kolorystyka;
-import edu.pl.mim.hotel.Requirement.Kierunek;
-import edu.pl.mim.hotel.Requirement.Ankieta;
-import edu.pl.mim.hotel.Requirement.Styl;
+import edu.pl.mim.hotel.Ankieta.Kolorystyka;
+import edu.pl.mim.hotel.Ankieta.Kierunek;
+import edu.pl.mim.hotel.Ankieta.Ankieta;
+import edu.pl.mim.hotel.Ankieta.Styl;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class Pokoj {
     private final boolean czyDostepnyInternet;
     private List<Pair<Date, Date>> zarezerwowane = new ArrayList<>();
 
-    public class RoomAlreadyBookedException extends Exception {};
+    public class PokojJuzZajety extends Exception {};
 
 
     public Pokoj(int numer, int cena, int maksymalnaLiczbaGosci, Styl styl, Kolorystyka kolorystyka, Kierunek kierunek, boolean czyDostepnyInternet) {
@@ -40,7 +40,7 @@ public class Pokoj {
     @Override
     public String toString() {
         String res = "";
-        res += "liczba miejsc " + maksymalnaLiczbaGosci;
+        res += "liczba miejsc " + maksymalnaLiczbaGosci + ", ";
         res += cena + " PLN, ";
         res += styl.toString() + " styl, ";
         res += kolorystyka.toString() + " kolorystyka, ";
@@ -59,13 +59,13 @@ public class Pokoj {
         return true;
     }
 
-    public void rezerwuj(Date dataPrzyjazdu, int dlugoscPobytu) throws RoomAlreadyBookedException {
+    public void rezerwuj(Date dataPrzyjazdu, int dlugoscPobytu) throws PokojJuzZajety {
         rezerwuj(dataPrzyjazdu, Ankieta.dodajDni(dataPrzyjazdu, dlugoscPobytu));
     }
 
-    public void rezerwuj(Date dataPrzyjazdu, Date dataWyjazdu) throws RoomAlreadyBookedException {
+    public void rezerwuj(Date dataPrzyjazdu, Date dataWyjazdu) throws PokojJuzZajety {
         if (!sprawdzDostepnosc(dataPrzyjazdu, dataWyjazdu))
-            throw new RoomAlreadyBookedException();
+            throw new PokojJuzZajety();
         zarezerwowane.add(new Pair<Date, Date>(dataPrzyjazdu, dataWyjazdu));
     }
 

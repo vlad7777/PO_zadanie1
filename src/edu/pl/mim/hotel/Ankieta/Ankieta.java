@@ -1,7 +1,8 @@
-package edu.pl.mim.hotel.Requirement;
+package edu.pl.mim.hotel.Ankieta;
 
 import edu.pl.mim.hotel.Pokoj;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -73,10 +74,9 @@ public class Ankieta {
     @Override
     public String toString() {
         String res = "";
-        if (liczbaGosci == 1)
-            res += "1 łóżko, ";
-        else
-            res += liczbaGosci + " łóżka są potrzebne, ";
+        SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+        res += "od " + df.format(dataPrzyjazdu) + " do " + df.format(dataWyjazdu) + ", ";
+        res += "liczba miejsc: " + liczbaGosci + ", ";
         res += "maksymalna cena " + maksCena + " PLN, ";
         res += styl.toString() + " styl, ";
         res += kolorystyka.toString() + " kolorystyka, ";

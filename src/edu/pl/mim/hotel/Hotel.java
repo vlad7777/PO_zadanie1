@@ -1,11 +1,11 @@
 package edu.pl.mim.hotel;
 
-import edu.pl.mim.hotel.Guest.*;
-import edu.pl.mim.hotel.Receptionist.*;
-import edu.pl.mim.hotel.Requirement.Ankieta;
-import edu.pl.mim.hotel.Requirement.Kierunek;
-import edu.pl.mim.hotel.Requirement.Kolorystyka;
-import edu.pl.mim.hotel.Requirement.Styl;
+import edu.pl.mim.hotel.Klient.*;
+import edu.pl.mim.hotel.Recepcjonista.*;
+import edu.pl.mim.hotel.Ankieta.Ankieta;
+import edu.pl.mim.hotel.Ankieta.Kierunek;
+import edu.pl.mim.hotel.Ankieta.Kolorystyka;
+import edu.pl.mim.hotel.Ankieta.Styl;
 
 import java.util.*;
 
@@ -31,11 +31,23 @@ public class Hotel {
     private List<Recepcjonista> recepcjonisci = new ArrayList<>();
 
     public Hotel(Pokoj[] pokoje, Recepcjonista[] recepcjonisci) {
+        if (pokoje == null || recepcjonisci == null)
+            throw new NullPointerException();
         this.pokoje.addAll(Arrays.asList(pokoje));
         this.recepcjonisci.addAll(Arrays.asList(recepcjonisci));
     }
 
     public void akceptuj(Zamowienie[] zamowienia, Pokoj[] pokoje, Recepcjonista[] recepcjonisci) throws Exception {
+
+        if (zamowienia == null)
+            return;
+
+        if ((recepcjonisci == null || recepcjonisci.length == 0) && zamowienia.length > 0)
+            throw new BrakRecepcjonistow();
+
+        if ((pokoje == null || pokoje.length == 0) && zamowienia.length > 0)
+            throw new BrakPokojow();
+
         for (Pokoj pokoj : pokoje) {
             if (!this.pokoje.contains(pokoj)) {
                 throw new NieznanyPokoj("W tym hotelu nie ma pokoju numer " + pokoj.numer());
@@ -47,14 +59,6 @@ public class Hotel {
                 throw new NieznanyRecepcjonista("W tym hotelu nie pracuje recepcjonisty o imienui " + recepcjonista.imie());
             }
         }
-
-        if (recepcjonisci.length == 0 && zamowienia.length > 0)
-            throw new BrakRecepcjonistow();
-
-        if (pokoje.length == 0 && zamowienia.length > 0)
-            throw new BrakPokojow();
-
-
         Queue<Zamowienie> queue = new ArrayDeque<>();
         queue.addAll(Arrays.asList(zamowienia));
 
@@ -95,30 +99,28 @@ public class Hotel {
     }
 
     public static void main(String[] args) {
-        Date dataPrzyjazdu = new Date(2016, 03, 01);
-        Date dataWyjazdu = new Date(2016, 03, 05);
 
-        Date dataPrzyjazduM = new Date(2016, 03, 9);
-        Date dataWyjazduM = new Date(2016, 03, 15);
+        Date dataPrzyjazdu = new GregorianCalendar(2016, 3, 1).getTime();
+        Date dataPrzyjazduM = new GregorianCalendar(2016, 3, 9).getTime();
 
-        List<Pokoj> roomsList = new ArrayList<>();
+        List<Pokoj> pokoje = new ArrayList<>();
 
-        roomsList.add(new Pokoj(1, 30, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
-        roomsList.add(new Pokoj(2 ,60, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
-        roomsList.add(new Pokoj(3 ,900, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
-        roomsList.add(new Pokoj(4 ,30, 3, Styl.Morksi, Kolorystyka.Szary, Kierunek.Poludnie, false));
-        roomsList.add(new Pokoj(5 ,310, 2, Styl.Secesyjny, Kolorystyka.Purpurowy, Kierunek.Wchod, true));
-        roomsList.add(new Pokoj(6 ,210, 5, Styl.Rustykalny, Kolorystyka.Stalowy, Kierunek.Zachod, false));
-        roomsList.add(new Pokoj(7, 1, 1300, Styl.Rustykalny, Kolorystyka.Stalowy, Kierunek.Zachod, true));
-        roomsList.add(new Pokoj(8, 100500, 1, Styl.Nowoczesny, Kolorystyka.Jasnozielony, Kierunek.Wchod, true));
-        roomsList.add(new Pokoj(9, 500, 9, Styl.Nowoczesny, Kolorystyka.Morski, Kierunek.Wchod, false));
-        roomsList.add(new Pokoj(10, 50, 2, Styl.Nowoczesny, Kolorystyka.Morski, Kierunek.Wchod, true));
+        pokoje.add(new Pokoj(1, 30, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
+        pokoje.add(new Pokoj(2 ,60, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
+        pokoje.add(new Pokoj(3 ,900, 1, Styl.Nowoczesny, Kolorystyka.Seledynowy, Kierunek.Polnoc, true));
+        pokoje.add(new Pokoj(4 ,30, 3, Styl.Morksi, Kolorystyka.Szary, Kierunek.Poludnie, false));
+        pokoje.add(new Pokoj(5 ,310, 2, Styl.Secesyjny, Kolorystyka.Purpurowy, Kierunek.Wchod, true));
+        pokoje.add(new Pokoj(6 ,210, 5, Styl.Rustykalny, Kolorystyka.Stalowy, Kierunek.Zachod, false));
+        pokoje.add(new Pokoj(7, 1, 1300, Styl.Rustykalny, Kolorystyka.Stalowy, Kierunek.Zachod, true));
+        pokoje.add(new Pokoj(8, 100500, 1, Styl.Nowoczesny, Kolorystyka.Jasnozielony, Kierunek.Wchod, true));
+        pokoje.add(new Pokoj(9, 500, 9, Styl.Nowoczesny, Kolorystyka.Morski, Kierunek.Wchod, false));
+        pokoje.add(new Pokoj(10, 50, 2, Styl.Nowoczesny, Kolorystyka.Morski, Kierunek.Wchod, true));
 
-        for (Pokoj r : roomsList)
+        for (Pokoj r : pokoje)
             try {
-                r.rezerwuj(dataPrzyjazduM, dataWyjazduM);
+                r.rezerwuj(dataPrzyjazduM, 6);
             } catch (Exception e) {
-                System.out.println("Pokoj booking error");
+                System.out.println("Błąd rezerwacji");
             }
 
         List<Ankieta> ankiety = new ArrayList<>();
@@ -146,13 +148,17 @@ public class Hotel {
             zamowienia.add(Hotel.przyjmijZamowienie(klienci.get(i), ankiety.get(i)));
         }
 
-        Pokoj[] pokojeArray = roomsList.toArray(new Pokoj[roomsList.size()]);
+        Pokoj[] pokojeArray = pokoje.toArray(new Pokoj[pokoje.size()]);
         Recepcjonista[] recepcjonisciArray = recepcjonisci.toArray(new Recepcjonista[recepcjonisci.size()]);
         Zamowienie[] zamowieniaArray = zamowienia.toArray(new Zamowienie[zamowienia.size()]);
 
         Hotel greenGables = new Hotel(pokojeArray, recepcjonisciArray);
         try {
             greenGables.akceptuj(zamowieniaArray, pokojeArray, recepcjonisciArray);
+        } catch (BrakPokojow e) {
+            System.out.println("Błąd: Brak pokojów");
+        } catch (BrakRecepcjonistow e) {
+            System.out.println("Błąd: Brak recepcjonistów");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
