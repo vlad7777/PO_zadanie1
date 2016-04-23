@@ -34,10 +34,9 @@ public class Ankieta {
         this.dataWyjazdu = dodajDni(dataPrzyjazdu, dlugoscPobytu);
     }
 
-    public int iloscSpelnionychWymagan(Pokoj pokoj) {
+    public int iloscSpelnionychWymagan(Pokoj pokoj) { // zwraca -1 gdy pokój jest zajęty
 
-        //critical requirement: we can't put someone in a pokoj that is already booked
-        if (!pokoj.sprawdzDostepnosc(dataPrzyjazdu, dataWyjazdu))
+        if (!pokoj.sprawdzDostepnosc(dataPrzyjazdu, dataWyjazdu)) // krytyczne wymaganie
             return -1;
 
         int ret = 0;
@@ -67,7 +66,7 @@ public class Ankieta {
     {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        cal.add(Calendar.DATE, days);
         return cal.getTime();
     }
 

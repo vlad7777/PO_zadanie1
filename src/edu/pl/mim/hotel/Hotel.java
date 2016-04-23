@@ -75,18 +75,24 @@ public class Hotel {
             System.out.println("Recepcjonista: " + recepcjonisci[aktualnyRecepcjonista].toString());
             System.out.println("Zamówienie: " + aktualneZamowienie.toString());
 
-            Pokoj wybranyPokoj = recepcjonisci[aktualnyRecepcjonista].wybierzPokoj(pokoje, aktualneZamowienie.ankieta());
+            try {
+                Pokoj wybranyPokoj = recepcjonisci[aktualnyRecepcjonista].wybierzPokoj(pokoje, aktualneZamowienie.ankieta());
+                System.out.println("Proponowany pokój: " + (wybranyPokoj == null ? "nie znalieżiono odpowiedniego pokoju" : wybranyPokoj.toString()));
+                System.out.println("Klient: " + aktualneZamowienie.klient().toString());
 
-            System.out.println("Proponowany pokój: " + (wybranyPokoj == null ? "nie znalieżiono odpowiedniego pokoju" : wybranyPokoj.toString()));
-            System.out.println("Klient: " + aktualneZamowienie.klient().toString());
-
-            if (wybranyPokoj != null && aktualneZamowienie.klient().rozwaz(wybranyPokoj, aktualneZamowienie.ankieta())) {
-                aktualneZamowienie.zakoncz(wybranyPokoj);
-                System.out.println("tak");
-            } else {
-                queue.add(aktualneZamowienie);
+                if (wybranyPokoj != null && recepcjonisci[aktualnyRecepcjonista].zapytajKlienta(wybranyPokoj, aktualneZamowienie.ankieta(), aktualneZamowienie.klient())) {
+                    aktualneZamowienie.zakoncz(wybranyPokoj);
+                    System.out.println("tak");
+                } else {
+                    queue.add(aktualneZamowienie);
+                    System.out.println("nie");
+                }
+            } catch (Recepcjonista.BrakWolnychPokojow e) {
+                System.out.println("Proponowany pokój: brak wolnych pokojów, usuwamy zamówienie");
+                System.out.println("Klient: " + aktualneZamowienie.klient().toString());
                 System.out.println("nie");
             }
+
             System.out.println("-----------------------------\n\n");
 
             aktualnyRecepcjonista++;

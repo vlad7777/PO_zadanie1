@@ -26,7 +26,6 @@ public class Pokoj {
 
     public class PokojJuzZajety extends Exception {};
 
-
     public Pokoj(int numer, int cena, int maksymalnaLiczbaGosci, Styl styl, Kolorystyka kolorystyka, Kierunek kierunek, boolean czyDostepnyInternet) {
         this.numer = numer;
         this.cena = cena;

@@ -19,15 +19,15 @@ import static org.junit.Assert.assertTrue;
  */
 public class PokojTest {
     @Rule
-    ExpectedException exception = ExpectedException.none();
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void rezerwacjaTest() throws Exception {
 
-        Date marzec1 = new GregorianCalendar(2016, 3, 1, 14, 00).getTime();
-        Date marzec2 = new GregorianCalendar(2016, 3, 2, 14, 00).getTime();
-        Date marzec3 = new GregorianCalendar(2016, 3, 3, 14, 00).getTime();
-        Date marzec4 = new GregorianCalendar(2016, 3, 4, 14, 00).getTime();
+        Date marzec1 = new GregorianCalendar(2016, 3, 1).getTime();
+        Date marzec2 = new GregorianCalendar(2016, 3, 2).getTime();
+        Date marzec3 = new GregorianCalendar(2016, 3, 3).getTime();
+        Date marzec4 = new GregorianCalendar(2016, 3, 4).getTime();
 
         Pokoj r1 = new Pokoj(1, 200, 3, Styl.Morksi, Kolorystyka.Seledynowy, Kierunek.Wchod, true);
         r1.rezerwuj(marzec2, marzec4);
@@ -38,7 +38,7 @@ public class PokojTest {
     }
 
     @Test
-    void pokojJuzZajetyTest() throws Exception {
+    public void pokojJuzZajetyTest() throws Exception {
         Date dzis = new Date();
 
         Pokoj r = new Pokoj(1, 1, 1, Styl.Orientalny, Kolorystyka.Jasnozielony, Kierunek.Polnoc, true);

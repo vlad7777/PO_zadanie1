@@ -1,11 +1,12 @@
 package edu.pl.mim.hotel.Recepcjonista;
 
-import edu.pl.mim.hotel.Pokoj;
 import edu.pl.mim.hotel.Ankieta.Ankieta;
+import edu.pl.mim.hotel.Pokoj;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by vlad on 15.04.16.
@@ -45,11 +46,16 @@ public class AproksymacyjnyRecepcjonista extends Recepcjonista {
         }
     }
 
-    public Pokoj wybierzPokoj(Pokoj[] pokoje, Ankieta ankieta) {
+    public Pokoj wybierzPokoj(Pokoj[] pokoje, Ankieta ankieta) throws BrakWolnychPokojow {
+        List<Pokoj> wolnePokoje = wybierzWolnePokoje(pokoje, ankieta.dataPrzyjazdu(), ankieta.dataWyjazdu());
+        if (wolnePokoje.size() == 0)
+            throw new BrakWolnychPokojow();
+
         Pokoj r = Collections.min(Arrays.asList(pokoje), new ApproximateComparator(ankieta));
-        if (r != null && ankieta.iloscSpelnionychWymagan(r) > -1)
+        if (ankieta.iloscSpelnionychWymagan(r) >= Ankieta.LICZBA_WYMAGAN / 2)
             return r;
-        return null;
+        else
+            return null;
     }
 
 }

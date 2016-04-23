@@ -1,11 +1,11 @@
 package edu.pl.mim.hotel.Recepcjonista;
 
-import edu.pl.mim.hotel.Pokoj;
 import edu.pl.mim.hotel.Ankieta.Ankieta;
+import edu.pl.mim.hotel.Pokoj;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by vlad on 15.04.16.
@@ -27,12 +27,7 @@ public class PerfekcyjnyRecepcjonista extends Recepcjonista {
 
         public int compare(Pokoj a, Pokoj b) {
             int reqA = ankieta.iloscSpelnionychWymagan(a);
-            if (reqA == -1)
-                return 1;
-
             int reqB = ankieta.iloscSpelnionychWymagan(b);
-            if (reqB == -1)
-                return -1;
 
             if (Integer.compare(reqA, reqB) != 0)
                 return -1 * Integer.compare(reqA, reqB); // we need a room that fits the best
@@ -43,8 +38,11 @@ public class PerfekcyjnyRecepcjonista extends Recepcjonista {
         }
     }
 
-    public Pokoj wybierzPokoj(Pokoj[] pokoje, Ankieta ankieta) {
-        Pokoj r = Collections.min(Arrays.asList(pokoje), new PerfectComparator(ankieta));
+    public Pokoj wybierzPokoj(Pokoj[] pokoje, Ankieta ankieta) throws BrakWolnychPokojow {
+        List<Pokoj> wolnePokoje = wybierzWolnePokoje(pokoje, ankieta.dataPrzyjazdu(), ankieta.dataWyjazdu());
+        if (wolnePokoje.size() == 0)
+            throw new BrakWolnychPokojow();
+        Pokoj r = Collections.min(wolnePokoje, new PerfectComparator(ankieta));
         if (r != null && ankieta.czyPasujeDoskonale(r))
             return r;
         return null;

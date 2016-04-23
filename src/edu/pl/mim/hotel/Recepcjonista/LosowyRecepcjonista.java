@@ -1,8 +1,9 @@
 package edu.pl.mim.hotel.Recepcjonista;
 
-import edu.pl.mim.hotel.Pokoj;
 import edu.pl.mim.hotel.Ankieta.Ankieta;
+import edu.pl.mim.hotel.Pokoj;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -15,25 +16,13 @@ public class LosowyRecepcjonista extends Recepcjonista {
         this.typ = "Losowy";
     }
 
-    public Pokoj wybierzPokoj(Pokoj[] pokoje, Ankieta ankieta) {
-       int freeRooms = 0;
-        for (Pokoj pokoj : pokoje) {
-            if (ankieta.iloscSpelnionychWymagan(pokoj) != -1)
-                freeRooms++;
-        }
+    public Pokoj wybierzPokoj(Pokoj[] pokoje, Ankieta ankieta) throws BrakWolnychPokojow {
+        List<Pokoj> wolnePokoje = wybierzWolnePokoje(pokoje, ankieta.dataPrzyjazdu(), ankieta.dataWyjazdu());
+        if (wolnePokoje.size() == 0)
+            throw new BrakWolnychPokojow();
 
-        if (freeRooms == 0)
-            return null;
+        int ind = new Random().nextInt(wolnePokoje.size());
 
-        int ind = new Random().nextInt(freeRooms);
-
-        for (Pokoj pokoj : pokoje) {
-            if (ankieta.iloscSpelnionychWymagan(pokoj) != -1) {
-                if (ind == 0)
-                    return pokoj;
-                ind--;
-            }
-        }
-        return null;
+        return wolnePokoje.get(ind);
     }
 }
